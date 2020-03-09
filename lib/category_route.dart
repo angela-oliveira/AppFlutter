@@ -1,9 +1,8 @@
-
 import 'package:flutter/material.dart';
-
 import 'category.dart';
+import 'unit.dart';
 
-final _backgroundColor = Colors.green[100];
+final _backgroundColor = Colors.pink[50];
 
 class CategoryRoute extends StatelessWidget {
   const CategoryRoute();
@@ -29,6 +28,7 @@ class CategoryRoute extends StatelessWidget {
     Colors.purpleAccent,
     Colors.red,
   ];
+  
   static const _categoryIcons = <IconData>[
     Icons.alarm,
     Icons.arrow_left,
@@ -40,14 +40,21 @@ class CategoryRoute extends StatelessWidget {
     Icons.games,
   ];
 
-  /// Makes the correct number of rows for the list view.
-  ///
-  /// For portrait, we construct a [ListView] from the list of category widgets.
   Widget _buildCategoryWidgets(List<Widget> categories) {
     return ListView.builder(
       itemBuilder: (BuildContext context, int index) => categories[index],
       itemCount: categories.length,
     );
+  }
+
+  List<Unit> _retrieveUnitList(String categoryName){
+    return List.generate(10, (int i){
+      i += 1;
+      return Unit(
+        name: '$categoryName Unit $i',
+        conversion: i.toDouble(),
+      );
+    });
   }
 
   @override
@@ -59,6 +66,7 @@ class CategoryRoute extends StatelessWidget {
         name: _categoryNames[i],
         color: _baseColors[i],
         iconLocation: _categoryIcons[i],
+        units: _retrieveUnitList(_categoryNames[i])
       ));
     }
 
@@ -71,7 +79,7 @@ class CategoryRoute extends StatelessWidget {
     final appBar = AppBar(
       elevation: 0.0,
       title: Text(
-        'Unit Converter',
+        'App Flutter',
         style: TextStyle(
           color: Colors.black,
           fontSize: 30.0,
